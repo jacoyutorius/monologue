@@ -4,9 +4,13 @@
       <div class="card-content">
         <div class="content">
           <div class="field">
-            <label class="label">Message</label>
             <div class="control">
-              <textarea class="textarea" placeholder="Textarea" rows="2"></textarea>
+              <textarea
+                v-model="post.text"
+                :rows="lineRows"
+                class="textarea"
+                placeholder="Textarea">
+              </textarea>
             </div>
           </div>
 
@@ -54,10 +58,15 @@
 </template>
 
 <script>
+const BASE_ROW = 2;
+
 export default {
   name: 'Home',
   data() {
     return {
+      post: {
+        text: ""
+      },
       posts: [
         {
           text: "「サビ男サビ女」という毒にも薬にもならないような映画を観ている",
@@ -120,6 +129,11 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    lineRows() {
+      return BASE_ROW + this.post.text.split("").filter(v => v === "\n").length;
+    }
   }
 }
 </script>

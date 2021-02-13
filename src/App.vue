@@ -2,8 +2,8 @@
   <div id="app">
     <nav class="navbar is-dark" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
-        <a class="navbar-item" href="https://bulma.io">
-          <img src="https://bulma.io/images/bulma-logo.png" width="112" height="28">
+        <a class="navbar-item" href="/">
+          MONOLOGUE
         </a>
 
         <a role="button" class="navbar-burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
@@ -18,7 +18,6 @@
           <router-link to="/" class="navbar-item">Home</router-link>
           <router-link to="/about" class="navbar-item">About</router-link>
         </div>
-
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
@@ -28,35 +27,49 @@
               <a class="button is-light">
                 Log in
               </a>
+              <a @click="signOut" class="button is-light">Signout</a>
             </div>
           </div>
         </div>
       </div>
     </nav>
     
-
-    <section class="columns">
-      <div class="container column is-2 m-2">
-        <aside class="menu">
-          <p class="menu-label">
-            General
-          </p>
-          <ul class="menu-list">
-            <li><a>Dashboard</a></li>
-            <li><a>Customers</a></li>
-          </ul>
-        </aside>
-      </div>
-
-      <div class="container column is-7">
-        <router-view/>
-      </div>
-
-      <div class="container column is-5">
-      </div>
-    </section>
+    <router-view/>
   </div>
 </template>
+
+<script>
+import '@aws-amplify/ui-vue';
+import { Auth } from "aws-amplify";
+
+export default {
+  name: "Main",
+  data() {
+    return {
+      formFields: [
+        {
+          type: 'email',
+          label: 'Custom email Label',
+          placeholder: 'custom email placeholder',
+          required: true,
+        },
+        {
+          type: 'password',
+          label: 'Custom Password Label',
+          placeholder: 'custom password placeholder',
+          required: true,
+        }
+      ]
+    }
+  },
+  methods: {
+    signOut: async function() {
+      await Auth.signOut().catch(err => console.log(err));
+      this.$router.push("/auth");
+    }
+  }
+}
+</script>
 
 <style>
 </style>

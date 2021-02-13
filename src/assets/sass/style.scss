@@ -4,17 +4,12 @@
 // @import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
 @import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;500;800&display=swap');
 
-
-
 // Set your brand colors
 $purple: #4b4b4b;
 $pink: #FA7C91;
 $brown: #757763;
 $beige-light: #e8e8e8;
 $beige-lighter: #e8e8e8;
-// $white: #f2f2f2;
-// f2f2f2
-// e8e8e8
 
 // Update Bulma's global variables
 $family-sans-serif: "Raleway", sans-serif;
@@ -32,6 +27,13 @@ $input-border-color: transparent;
 $input-shadow: none;
 
 @import '~bulma/bulma';
+
+:root {
+  --amplify-primary-color: #4b4b4b;
+  --amplify-primary-tint: #757763;
+  --amplify-primary-shade: #e8e8e8;
+  --amplify-font-family: "Raleway", sans-serif;
+}
 
 body {
   background-image: url("/images/carrie-4.jpg");

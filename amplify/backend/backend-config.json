@@ -1,0 +1,10 @@
+{
+  "auth": {
+    "monologuefbf2424d": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false
+    }
+  }
+}

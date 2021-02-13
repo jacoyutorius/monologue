@@ -1,65 +1,79 @@
 <template>
-  <div class="home">
-    <div class="card my-3">
-      <div class="card-content">
-        <div class="content">
-          <div class="field">
-            <div class="control">
-              <textarea
-                v-model="post.text"
-                :rows="lineRows"
-                class="textarea"
-                placeholder="Textarea">
-              </textarea>
-            </div>
-          </div>
+  <section class="columns">
+    <div class="container column is-2 m-2">
+      <aside class="menu">
+        <p class="menu-label">
+          General
+        </p>
+        <ul class="menu-list">
+          <li><a>Dashboard</a></li>
+          <li><a>Customers</a></li>
+        </ul>
+      </aside>
+    </div>
 
-          <div class="card my-3">
-            <div class="card-content">
-              <div class="content">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-                <a href="#">#css</a> <a href="#">#responsive</a> 
+    <div class="container column is-7">
+      <div class="home">
+        <div class="card my-3">
+          <div class="card-content">
+            <div class="content">
+              <div class="field">
+                <div class="control">
+                  <textarea
+                    v-model="post.text"
+                    :rows="lineRows"
+                    class="textarea"
+                    placeholder="Textarea">
+                  </textarea>
+                </div>
+              </div>
+
+              <div class="field is-grouped">
+                <div class="control">
+                  <button class="button">Submit</button>
+                </div>
+                <div class="control">
+                  <button class="button is-light">Cancel</button>
+                </div>
               </div>
             </div>
-            <div class="card-footer">
-              <div class="card-footer-item is-small">
-                <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-              </div>
+          </div>
+        </div>
+
+        <div v-for="(post, i) in posts" v-bind:key="i" class="card my-3">
+          <div class="card-content">
+            <div class="content">
+              {{ post.text }}
             </div>
           </div>
+          <div class="card-footer">
+            <div class="card-footer-item is-small">
+              <time :datetime="post.created_at">{{ post.created_at }}</time>
+            </div>
+          </div>
+        </div>
 
-    <div v-for="(post, i) in posts" v-bind:key="i" class="card my-3">
-      <div class="card-content">
-        <div class="content">
-          {{ post.text }}
+        <div class="card my-3">
+          <div class="card-content">
+            <div class="content">
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+              Phasellus nec iaculis mauris. <a>@bulmaio</a>.
+              <a href="#">#css</a> <a href="#">#responsive</a> 
+            </div>
+          </div>
+          <div class="card-footer">
+            <div class="card-footer-item is-small">
+              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
+            </div>
+          </div>
         </div>
-      </div>
-      <div class="card-footer">
-        <div class="card-footer-item is-small">
-          <time :datetime="post.created_at">{{ post.created_at }}</time>
-        </div>
+
       </div>
     </div>
 
-    <div class="card my-3">
-      <div class="card-content">
-        <div class="content">
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-          Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-          <a href="#">#css</a> <a href="#">#responsive</a> 
-        </div>
-      </div>
-      <div class="card-footer">
-        <div class="card-footer-item is-small">
-          <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-        </div>
-      </div>
-
-      <div class="container column is-5">
-      </div>
-    </section>
-  </div>
+    <div class="container column is-5">
+    </div>
+  </section>
 </template>
 
 <script>

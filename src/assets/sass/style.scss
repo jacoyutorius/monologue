@@ -7,7 +7,7 @@
 // Set your brand colors
 $purple: #4b4b4b;
 $pink: #FA7C91;
-$brown: #757763;
+$brown: #6a6a6a;
 $beige-light: #e8e8e8;
 $beige-lighter: #e8e8e8;
 
@@ -30,7 +30,7 @@ $input-shadow: none;
 
 :root {
   --amplify-primary-color: #4b4b4b;
-  --amplify-primary-tint: #757763;
+  --amplify-primary-tint: #6a6a6a;
   --amplify-primary-shade: #e8e8e8;
   --amplify-font-family: "Raleway", sans-serif;
 }
@@ -39,9 +39,9 @@ body {
   background-image: url("/images/carrie-4.jpg");
 }
 
-#app {
-  min-height: 100em;
-}
+// #app {
+//   min-height: 100em;
+// }
 
 .navbar.is-dark {
   background-color: #cce2ef6e;

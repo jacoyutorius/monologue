@@ -21,13 +21,10 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-primary">
+              <a class="button is-rounded is-primary">
                 <strong>Sign up</strong>
               </a>
-              <a class="button is-light">
-                Log in
-              </a>
-              <a @click="signOut" class="button is-light">Signout</a>
+              <a @click="signOut" class="button is-rounded is-light">Signout</a>
             </div>
           </div>
         </div>

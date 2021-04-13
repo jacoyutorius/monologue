@@ -14,6 +14,12 @@
     "categories": {
       "auth": {
         "monologuefbf2424d": {}
+      },
+      "hosting": {
+        "amplifyhosting": {
+          "appId": "d12dqc7y68aqtd",
+          "type": "cicd"
+        }
       }
     }
   }

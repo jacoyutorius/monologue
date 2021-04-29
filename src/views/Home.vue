@@ -40,34 +40,18 @@
           </div>
         </div>
 
-        <div v-for="(post, i) in posts" v-bind:key="i" class="card my-3">
+        <div v-for="(row, i) in displayRows" v-bind:key="i" class="card my-3">
           <div class="card-content">
             <div class="content">
-              {{ post.text }}
+              <span v-html="row.post"></span>
             </div>
           </div>
           <div class="card-footer">
             <div class="card-footer-item is-small">
-              <time :datetime="post.created_at">{{ post.created_at }}</time>
+              <time :datetime="post.timestamp">{{ row.timestamp }}</time>
             </div>
           </div>
         </div>
-
-        <div class="card my-3">
-          <div class="card-content">
-            <div class="content">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Phasellus nec iaculis mauris. <a>@bulmaio</a>.
-              <a href="#">#css</a> <a href="#">#responsive</a> 
-            </div>
-          </div>
-          <div class="card-footer">
-            <div class="card-footer-item is-small">
-              <time datetime="2016-1-1">11:09 PM - 1 Jan 2016</time>
-            </div>
-          </div>
-        </div>
-
       </div>
     </div>
 
@@ -77,7 +61,13 @@
 </template>
 
 <script>
+import axios from "axios";
+
+axios.defaults.headers.common['x-api-key'] = "ZgCQeedx4J8kCopzJGhz06l1ijD55A2U7TohXsFx";
+axios.defaults.withCredentials = true
+
 const BASE_ROW = 2;
+const API_URL = "https://0esn29r6vk.execute-api.ap-northeast-1.amazonaws.com/develop";
 
 export default {
   name: 'Home',
@@ -86,73 +76,53 @@ export default {
       post: {
         text: ""
       },
-      posts: [
-        {
-          text: "「サビ男サビ女」という毒にも薬にもならないような映画を観ている",
-          created_at: "2021-02-12T18:12:59.435Z",
-          key_phrases: [
-            {
-              score: 0.9999999403953552,
-              text: "サビ男サビ女」という毒にも薬",
-              begin_offset: 1,
-              end_offset: 15
-            },
-            {
-              score: 1,
-              text: "映画",
-              begin_offset: 24,
-              end_offset: 26
-            }
-          ]
-        },
-        {
-          text: "在庫復活したっぽいのでポチってしまった。何ができるのかもよくわかってないし、何をしたいのかも決めてない > M5Stack Core2 for AWS - ESP32 IoT開発キット - スイッチサイエンス",
-          created_at: "2021-02-12T18:13:07.958Z",
-          key_phrases: [
-            {
-              score: 0.6505729556083679,
-              type: "COMMERCIAL_ITEM",
-              text: "M5Stack",
-              begin_offset: 54,
-              end_offset: 61
-            },
-            {
-              score: 0.691093921661377,
-              type: "TITLE",
-              text: "Core2",
-              begin_offset: 62,
-              end_offset: 67
-            },
-            {
-              score: 0.43248245120048523,
-              type: "TITLE",
-              text: "AWS",
-              begin_offset: 72,
-              end_offset: 75
-            },
-            {
-              score: 0.5308316946029663,
-              type: "TITLE",
-              text: "ESP32",
-              begin_offset: 78,
-              end_offset: 83
-            },
-            {
-              score: 0.41701817512512207,
-              type: "TITLE",
-              text: "スイッチ",
-              begin_offset: 95,
-              end_offset: 99
-            }
-          ]
-        }
-      ]
+      posts: []
     };
   },
   computed: {
     lineRows() {
       return BASE_ROW + this.post.text.split("").filter(v => v === "\n").length;
+    },
+    displayRows() {
+      return this.posts.map(row => {     
+        let str = row.post.S;
+
+        row.keyphrases.L.forEach(v => {
+          try {
+            str = str.replaceAll(v.M.Text.S, "<a href='/' class='keyphrase'>" + v.M.Text.S + "</a>" )
+          }
+          catch (e) {
+            console.error(e, v);
+          }          
+        });
+
+        return {
+          post: str,
+          timestamp: row.timestamp.N
+        };
+      });
+    }
+  },
+  async created() {
+    const { data } = await this.getAllMonologues();
+    this.posts = data;
+  },
+  methods: {
+    getAllMonologues() {
+      try {
+        return axios.get(API_URL);
+      }
+      catch (e) {
+        console.error(e);
+        return {}
+      }
     }
   }
 }
 </script>
+
+<style>
+a.keyphrase {
+  text-decoration: underline dotted !important;
+}
+</style>

@@ -27,10 +27,9 @@
                   </textarea>
                 </div>
               </div>
-
               <div class="field is-grouped">
                 <div class="control">
-                  <button class="button">Submit</button>
+                  <button @click="postMonologue" class="button">Post</button>
                 </div>
                 <div class="control">
                   <button class="button is-light">Cancel</button>
@@ -103,18 +102,24 @@ export default {
       });
     }
   },
-  async created() {
-    const { data } = await this.getAllMonologues();
-    this.posts = data;
+  created() {
+    this.getAllMonologues();
   },
   methods: {
-    getAllMonologues() {
-      try {
-        return axios.get(API_URL);
-      }
-      catch (e) {
-        console.error(e);
-        return {}
+    async getAllMonologues() {
+      const { data } = await axios.get(API_URL).catch(e => console.error(e));
+      this.posts = data;
+    },
+    async postMonologue() {
+      const res = await axios.post(API_URL,
+                                  {
+                                    post: this.post.text
+                                  })
+                              .catch(e => { console.error(e) });
+
+      if (res.data) {
+        this.post.text = "";
+        this.getAllMonologues();
       }
     }
   }

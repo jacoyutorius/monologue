@@ -1,16 +1,16 @@
 export default {
   namespaced: true,
   state: {
-    state: null,
     user: null
+  },
+  getters: {
+    isAuthenticated: state => !!state.user
   },
   mutations: {
     login(state, payload) {
-      state.state = payload.state;
       state.user = payload.user;
     },
     logout(state) {
-      state.state = null;
       state.user = null;
     }
   }

@@ -21,10 +21,10 @@
         <div class="navbar-end">
           <div class="navbar-item">
             <div class="buttons">
-              <a class="button is-rounded is-primary">
+              <a v-if="isAuthenticated" @click="signOut" class="button is-rounded is-light">Signout</a>
+              <!-- <a v-else class="button is-rounded is-primary">
                 <strong>Sign up</strong>
-              </a>
-              <a @click="signOut" class="button is-rounded is-light">Signout</a>
+              </a> -->
             </div>
           </div>
         </div>
@@ -38,6 +38,7 @@
 <script>
 import '@aws-amplify/ui-vue';
 import { Auth } from "aws-amplify";
+import { mapGetters } from 'vuex';
 
 export default {
   name: "Main",
@@ -58,6 +59,11 @@ export default {
         }
       ]
     }
+  },
+  computed: {
+    ...mapGetters({
+      isAuthenticated: "auth/isAuthenticated"
+    })
   },
   methods: {
     signOut: async function() {

@@ -31,15 +31,12 @@
                 <div class="control">
                   <button @click="postMonologue" class="button">Post</button>
                 </div>
-                <div class="control">
-                  <button class="button is-light">Cancel</button>
-                </div>
               </div>
             </div>
           </div>
         </div>
 
-        <div v-for="(row, i) in displayRows" v-bind:key="i" class="card my-3">
+        <div v-for="(row, i) in posts" v-bind:key="i" class="card my-3">
           <div class="card-content">
             <div class="content">
               <span v-html="row.post"></span>
@@ -47,7 +44,7 @@
           </div>
           <div class="card-footer">
             <div class="card-footer-item is-small">
-              <time :datetime="post.timestamp">{{ row.timestamp }}</time>
+              <time :datetime="post.createdAt">{{ row.createdAt }}</time>
             </div>
           </div>
         </div>
@@ -81,25 +78,6 @@ export default {
   computed: {
     lineRows() {
       return BASE_ROW + this.post.text.split("").filter(v => v === "\n").length;
-    },
-    displayRows() {
-      return this.posts.map(row => {     
-        let str = row.post.S;
-
-        row.keyphrases.L.forEach(v => {
-          try {
-            str = str.replaceAll(v.M.Text.S, "<a href='/' class='keyphrase'>" + v.M.Text.S + "</a>" )
-          }
-          catch (e) {
-            console.error(e, v);
-          }          
-        });
-
-        return {
-          post: str,
-          timestamp: row.timestamp.N
-        };
-      });
     }
   },
   created() {
@@ -115,7 +93,7 @@ export default {
                                   {
                                     post: this.post.text
                                   })
-                              .catch(e => { console.error(e) });
+                             .catch(e => { console.error(e) });
 
       if (res.data) {
         this.post.text = "";
